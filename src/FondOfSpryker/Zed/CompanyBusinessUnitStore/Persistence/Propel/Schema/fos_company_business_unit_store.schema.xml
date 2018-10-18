@@ -18,5 +18,7 @@
         <unique name="fos_company_business_unit_store-fk_company_business_unit">
             <unique-column name="fk_company_business_unit"/>
         </unique>
-    <id-method-parameter value="fos_company_business_unit_store_pk_seq"/></table>
+
+        <id-method-parameter value="fos_company_business_unit_store_pk_seq"/>
+    </table>
 </database>
