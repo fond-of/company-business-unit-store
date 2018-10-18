@@ -8,17 +8,13 @@
       "email": "daniel-rose@gmx.de"
     },
     {
-      "name": "Felix Pfister",
-      "email": "felix@pfister.de"
-    },
-    {
       "name": "Marcello Muscara",
       "email": "marcello@codeministry.de"
     }
   ],
   "require": {
     "php": ">=7.1",
-    "spryker/company-business-unit": "^2.3.0"
+    "fond-of-spryker/company-business-unit/": "^2.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.12",
