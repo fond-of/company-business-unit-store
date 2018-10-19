@@ -5,8 +5,6 @@
 
 ## Installation
 
-Still WIP ;)
-
 ```
 composer require fond-of-spryker/company-business-unit-store
 ```
