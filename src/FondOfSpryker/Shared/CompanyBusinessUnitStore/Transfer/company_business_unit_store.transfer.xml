@@ -8,6 +8,23 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CompanyBusinessUnitStoreResponse">
+        <property name="hasCompanyBusinessUnitStore" type="bool" />
+        <property name="companyBusinessUnitStoreTransfer" type="CompanyBusinessUnitStore" />
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CompanyBusinessUnitStoreError[]" singular="error" />
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitStoreError">
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitStoreCollection">
+        <property name="filter" type="Filter" />
+        <property name="companyBusinessUnitStores" type="CompanyBusinessUnitStore[]" singular="companyBusinessUnitStore" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
     <!--transfer name="CompanyBusinessUnitStoreAddress">
         <property name="idCompanyBusinessUnitStoreAddress" type="int"/>
         <property name="fkCountry" type="int"/>
