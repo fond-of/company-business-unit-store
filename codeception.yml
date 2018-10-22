@@ -1,4 +1,4 @@
-namespace: FondOfSpryker
+namespace: fond-of-spryker/company-business-unit-store
 suites:
   unit:
     path: .
