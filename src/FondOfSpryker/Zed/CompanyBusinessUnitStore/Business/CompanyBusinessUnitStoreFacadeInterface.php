@@ -2,105 +2,57 @@
 
 namespace FondOfSpryker\Zed\CompanyBusinessUnitStore\Business;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitStoreResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer;
 
 interface CompanyBusinessUnitStoreFacadeInterface
 {
     /**
-     * Specification:
-     * - Get companyBusinessUnitStore.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
      */
-    public function getCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer;
+    public function getCompanyBusinessUnitStoreById(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer;
 
     /**
-     * Specification:
-     * - Stores companyBusinessUnitStore data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer[]
      */
-    public function addCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): CompanyBusinessUnitStoreResponseTransfer;
+    public function findCompanyBusinessUnitStoresByCompanyBusinessUnitId(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): array;
 
     /**
-     * Specification:
-     * - Update companyBusinessUnitStore data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer
      */
-    public function updateCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): CompanyBusinessUnitStoreResponseTransfer;
+    public function saveCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): CompanyBusinessUnitStoreTransfer;
 
     /**
-     * Specification:
-     * - Delete companyBusinessUnitStore data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function deleteCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): bool;
+    public function deleteCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): void;
 
     /**
-     * Specification:
-     * - Find companyBusinessUnitStore by id
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer|null
      */
-    public function findCompanyBusinessUnitStoreById(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer;
+    public function getCompanyBusinessUnitStoreAddressById(CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer): ?CompanyBusinessUnitStoreAddressTransfer;
 
     /**
-     * Specification:
-     * - Find companyBusinessUnitStore by name
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
      */
-    public function findCompanyBusinessUnitStoreByName(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer;
+    public function saveCompanyBusinessUnitStoreAddress(CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer): CompanyBusinessUnitStoreAddressTransfer;
 
     /**
-     * Specification:
-     * - Checks if the companyBusinessUnitStore exists.
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return bool
+     * @return void
      */
-    public function hasCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): bool;
-
-    /**
-     * Specification:
-     * - Get companyBusinessUnitStore collection
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer $CompanyBusinessUnitStoreCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer
-     */
-    public function getCompanyBusinessUnitStoreCollection(CompanyBusinessUnitStoreCollectionTransfer $CompanyBusinessUnitStoreCollectionTransfer): CompanyBusinessUnitStoreCollectionTransfer;
+    public function deleteCompanyBusinessUnitStoreAddress(CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer): void;
 }

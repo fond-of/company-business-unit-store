@@ -2,66 +2,52 @@
 
 namespace FondOfSpryker\Zed\CompanyBusinessUnitStore\Business;
 
-use FondOfSpryker\Zed\CompanyBusinessUnitStore\CompanyBusinessUnitStoreDependencyProvider;
-use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStore;
-use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreInterface;
+use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreAddressReader;
+use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreAddressReaderInterface;
+use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreAddressWriter;
+use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreAddressWriterInterface;
 use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreReader;
 use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreReaderInterface;
-use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStoreExpander\CompanyBusinessUnitStoreExpander;
-use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStoreExpander\CompanyBusinessUnitStoreExpanderInterface;
+use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreWriter;
+use FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \FondOfSpryker\Zed\CompanyBusinessUnitStore\CompanyBusinessUnitStoreConfig getConfig()
- * @method \FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence\CompanyBusinessUnitStoreQueryContainerInterface getQueryContainer()
  * @method \FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence\CompanyBusinessUnitStoreEntityManagerInterface getEntityManager()
  * @method \FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence\CompanyBusinessUnitStoreRepositoryInterface getRepository()
  */
 class CompanyBusinessUnitStoreBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreInterface
-     */
-    public function createCompanyBusinessUnitStore(): CompanyBusinessUnitStoreInterface
-    {
-        $config = $this->getConfig();
-
-        $companyBusinessUnitStore = new CompanyBusinessUnitStore(
-            $this->getQueryContainer(),
-            $config,
-            $this->createCompanyBusinessUnitStoreExpander()
-        );
-
-        return $companyBusinessUnitStore;
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreReaderInterface
      */
     public function createCompanyBusinessUnitStoreReader(): CompanyBusinessUnitStoreReaderInterface
     {
-        return new CompanyBusinessUnitStoreReader(
-            $this->getEntityManager(),
-            $this->getRepository(),
-            $this->createCompanyBusinessUnitStoreExpander()
-        );
+        return new CompanyBusinessUnitStoreReader($this->getRepository());
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStoreExpander\CompanyBusinessUnitStoreExpanderInterface
+     * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreWriterInterface
      */
-    public function createCompanyBusinessUnitStoreExpander(): CompanyBusinessUnitStoreExpanderInterface
+    public function createCompanyBusinessUnitStoreWriter(): CompanyBusinessUnitStoreWriterInterface
     {
-        return new CompanyBusinessUnitStoreExpander(
-            $this->getCompanyBusinessUnitStoreTransferExpanderPlugins()
-        );
+        return new CompanyBusinessUnitStoreWriter($this->getEntityManager());
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Dependency\Plugin\CompanyBusinessUnitStoreTransferExpanderPluginInterface[]
+     * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreAddressReaderInterface
      */
-    protected function getCompanyBusinessUnitStoreTransferExpanderPlugins(): array
+    public function createCompanyBusinessUnitStoreAddressReader(): CompanyBusinessUnitStoreAddressReaderInterface
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitStoreDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_STORE_TRANSFER_EXPANDER);
+        return new CompanyBusinessUnitStoreAddressReader($this->getRepository());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore\CompanyBusinessUnitStoreAddressWriterInterface
+     */
+    public function createCompanyBusinessUnitStoreAddressWriter(): CompanyBusinessUnitStoreAddressWriterInterface
+    {
+        return new CompanyBusinessUnitStoreAddressWriter($this->getEntityManager());
     }
 }

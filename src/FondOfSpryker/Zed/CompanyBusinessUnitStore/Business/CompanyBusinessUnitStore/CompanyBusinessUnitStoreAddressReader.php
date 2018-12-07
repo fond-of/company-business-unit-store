@@ -3,9 +3,9 @@
 namespace FondOfSpryker\Zed\CompanyBusinessUnitStore\Business\CompanyBusinessUnitStore;
 
 use FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence\CompanyBusinessUnitStoreRepositoryInterface;
-use Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer;
 
-class CompanyBusinessUnitStoreReader implements CompanyBusinessUnitStoreReaderInterface
+class CompanyBusinessUnitStoreAddressReader implements CompanyBusinessUnitStoreAddressReaderInterface
 {
     /**
      * @var \FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence\CompanyBusinessUnitStoreRepositoryInterface
@@ -21,22 +21,12 @@ class CompanyBusinessUnitStoreReader implements CompanyBusinessUnitStoreReaderIn
     }
 
     /**
-     * @param int $companyBusinessUnitStoreId
+     * @param int $companyBusinessUnitStoreAddressId
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer|null
      */
-    public function findCompanyBusinessUnitStoreById(int $companyBusinessUnitStoreId): ?CompanyBusinessUnitStoreTransfer
+    public function findCompanyBusinessUnitStoreAddressById(int $companyBusinessUnitStoreAddressId): ?CompanyBusinessUnitStoreAddressTransfer
     {
-        return $this->companyBusinessUnitStoreRepository->findCompanyBusinessUnitStoreById($companyBusinessUnitStoreId);
-    }
-
-    /**
-     * @param int $companyBusinessUnitId
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer[]
-     */
-    public function findCompanyBusinessUnitStoresByCompanyBusinessUnitId(int $companyBusinessUnitId): array
-    {
-        return $this->companyBusinessUnitStoreRepository->findCompanyBusinessUnitStoresByCompanyBusinessUnitId($companyBusinessUnitId);
+        return $this->companyBusinessUnitStoreRepository->findCompanyBusinessUnitStoreAddressById($companyBusinessUnitStoreAddressId);
     }
 }

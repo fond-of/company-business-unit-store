@@ -2,15 +2,9 @@
 
 namespace FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
-use Orm\Zed\CompanyBusinessUnitStore\Persistence\FosCompanyBusinessUnitStoreQuery;
-use Propel\Runtime\Formatter\ArrayFormatter;
+use Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Propel\PropelFilterCriteria;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \FondOfSpryker\Zed\CompanyBusinessUnitStore\Persistence\CompanyBusinessUnitStorePersistenceFactory getFactory()
@@ -18,93 +12,61 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CompanyBusinessUnitStoreRepository extends AbstractRepository implements CompanyBusinessUnitStoreRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer $companyBusinessUnitStoreCollectionTransfer
+     * @param int $companyBusinessUnitStoreId
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
      */
-    public function getCompanyBusinessUnitStoreCollection(CompanyBusinessUnitStoreCollectionTransfer $companyBusinessUnitStoreCollectionTransfer): CompanyBusinessUnitStoreCollectionTransfer
+    public function findCompanyBusinessUnitStoreById(int $companyBusinessUnitStoreId): ?CompanyBusinessUnitStoreTransfer
     {
-        $companyBusinessUnitStoreQuery = $this->getFactory()
-            ->createCompanyBusinessUnitStoreQuery();
+        $companyBusinessUnitStoreEntity = $this->getFactory()
+            ->createFosCompanyBusinessUnitStoreQuery()
+            ->findOneByIdCompanyBusinessUnitStore($companyBusinessUnitStoreId);
 
-        $companyBusinessUnitStoreQuery = $this->applyFilterToQuery($companyBusinessUnitStoreQuery, $companyBusinessUnitStoreCollectionTransfer->getFilter());
-        $companyBusinessUnitStoreQuery = $this->applyPagination($companyBusinessUnitStoreQuery, $companyBusinessUnitStoreCollectionTransfer->getPagination());
-        $companyBusinessUnitStoreQuery->setFormatter(ArrayFormatter::class);
-        $this->hydrateCompanyBusinessUnitStoreListWithCompanyBusinessUnitStores($companyBusinessUnitStoreCollectionTransfer, $companyBusinessUnitStoreQuery->find()->getData());
+        if ($companyBusinessUnitStoreEntity === null) {
+            return null;
+        }
 
-        return $companyBusinessUnitStoreCollectionTransfer;
+        return (new CompanyBusinessUnitStoreTransfer())->fromArray($companyBusinessUnitStoreEntity->toArray());
     }
 
     /**
-     * @param \Orm\Zed\CompanyBusinessUnitStore\Persistence\FosCompanyBusinessUnitStoreQuery $fosCompanyBusinessUnitStoreQuery
-     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     * @param int $companyBusinessUnitId
      *
-     * @return \Orm\Zed\CompanyBusinessUnitStore\Persistence\FosCompanyBusinessUnitStoreQuery
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer[]
      */
-    protected function applyFilterToQuery(FosCompanyBusinessUnitStoreQuery $fosCompanyBusinessUnitStoreQuery, ?FilterTransfer $filterTransfer): FosCompanyBusinessUnitStoreQuery
+    public function findCompanyBusinessUnitStoresByCompanyBusinessUnitId(int $companyBusinessUnitId): array
     {
-        $criteria = new Criteria();
-        if ($filterTransfer !== null) {
-            $criteria = (new PropelFilterCriteria($filterTransfer))
-                ->toCriteria();
+        $companyBusinessUnitStoreEntities = $this->getFactory()
+            ->createFosCompanyBusinessUnitStoreQuery()
+            ->findByFkCompanyBusinessUnit($companyBusinessUnitId);
+
+        if (empty($companyBusinessUnitStoreEntities)) {
+            return [];
         }
 
-        $fosCompanyBusinessUnitStoreQuery->mergeWith($criteria);
+        $stores = [];
+        foreach ($companyBusinessUnitStoreEntities as $companyBusinessUnitStoreEntity) {
+            $stores[] = (new CompanyBusinessUnitStoreTransfer())->fromArray($companyBusinessUnitStoreEntity->toArray());
+        }
 
-        return $fosCompanyBusinessUnitStoreQuery;
+        return $stores;
     }
 
     /**
-     * @param \Orm\Zed\CompanyBusinessUnitStore\Persistence\FosCompanyBusinessUnitStoreQuery $fosCompanyBusinessUnitStoreQuery
-     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
+     * @param int $companyBusinessUnitStoreAddressId
      *
-     * @return \Orm\Zed\CompanyBusinessUnitStore\Persistence\FosCompanyBusinessUnitStoreQuery
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer|null
      */
-    protected function applyPagination(FosCompanyBusinessUnitStoreQuery $fosCompanyBusinessUnitStoreQuery, ?PaginationTransfer $paginationTransfer = null): FosCompanyBusinessUnitStoreQuery
+    public function findCompanyBusinessUnitStoreAddressById(int $companyBusinessUnitStoreAddressId): ?CompanyBusinessUnitStoreAddressTransfer
     {
-        if (empty($paginationTransfer)) {
-            return $fosCompanyBusinessUnitStoreQuery;
+        $companyBusinessUnitStoreAddressEntity = $this->getFactory()
+            ->createFosCompanyBusinessUnitStoreAddressQuery()
+            ->findOneByIdCompanyBusinessUnitStoreAddress($companyBusinessUnitStoreAddressId);
+
+        if ($companyBusinessUnitStoreAddressEntity === null) {
+            return null;
         }
 
-        $page = $paginationTransfer
-            ->requirePage()
-            ->getPage();
-
-        $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
-            ->getMaxPerPage();
-
-        $paginationModel = $fosCompanyBusinessUnitStoreQuery->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        return $paginationModel->getQuery();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer $companyBusinessUnitStoreListTransfer
-     * @param array $companyBusinessUnitStores
-     *
-     * @return void
-     */
-    protected function hydrateCompanyBusinessUnitStoreListWithCompanyBusinessUnitStores(CompanyBusinessUnitStoreCollectionTransfer $companyBusinessUnitStoreListTransfer, array $companyBusinessUnitStores): void
-    {
-        $companyBusinessUnitStoreCollection = new ArrayObject();
-
-        foreach ($companyBusinessUnitStores as $companyBusinessUnitStore) {
-            $companyBusinessUnitStoreCollection->append(
-                $this->getFactory()
-                    ->createCompanyBusinessUnitStoreMapper()
-                    ->mapCompanyBusinessUnitStoreEntityToCompanyBusinessUnitStore($companyBusinessUnitStore)
-            );
-        }
-
-        $companyBusinessUnitStoreListTransfer->setCompanyBusinessUnitStores($companyBusinessUnitStoreCollection);
+        return (new CompanyBusinessUnitStoreAddressTransfer())->fromArray($companyBusinessUnitStoreAddressEntity->toArray());
     }
 }

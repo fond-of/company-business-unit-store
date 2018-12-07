@@ -2,8 +2,7 @@
 
 namespace FondOfSpryker\Zed\CompanyBusinessUnitStore\Business;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitStoreResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -13,130 +12,86 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyBusinessUnitStoreFacade extends AbstractFacade implements CompanyBusinessUnitStoreFacadeInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
      */
-    public function getCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->get($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreResponseTransfer
-     */
-    public function addCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): CompanyBusinessUnitStoreResponseTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->add($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreResponseTransfer
-     */
-    public function updateCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): CompanyBusinessUnitStoreResponseTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->update($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return bool
-     */
-    public function deleteCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): bool
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->delete($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
-     */
-    public function findCompanyBusinessUnitStoreById(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->findById($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
-     */
-    public function findCompanyBusinessUnitStoreByName(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->findByName($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer|null
-     */
-    public function hasCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): bool
-    {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitStore()
-            ->hasCompanyBusinessUnitStore($companyBusinessUnitStoreTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer $CompanyBusinessUnitStoreCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreCollectionTransfer
-     */
-    public function getCompanyBusinessUnitStoreCollection(CompanyBusinessUnitStoreCollectionTransfer $CompanyBusinessUnitStoreCollectionTransfer): CompanyBusinessUnitStoreCollectionTransfer
+    public function getCompanyBusinessUnitStoreById(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): ?CompanyBusinessUnitStoreTransfer
     {
         return $this->getFactory()
             ->createCompanyBusinessUnitStoreReader()
-            ->getCompanyBusinessUnitStoreCollection($CompanyBusinessUnitStoreCollectionTransfer);
+            ->findCompanyBusinessUnitStoreById($companyBusinessUnitStoreTransfer->getIdCompanyBusinessUnitStore());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer[]
+     */
+    public function findCompanyBusinessUnitStoresByCompanyBusinessUnitId(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): array
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitStoreReader()
+            ->findCompanyBusinessUnitStoresByCompanyBusinessUnitId($companyBusinessUnitStoreTransfer->getFkCompanyBusinessUnit());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer
+     */
+    public function saveCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): CompanyBusinessUnitStoreTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitStoreWriter()
+            ->saveCompanyBusinessUnitStore($companyBusinessUnitStoreTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer
+     *
+     * @return void
+     */
+    public function deleteCompanyBusinessUnitStore(CompanyBusinessUnitStoreTransfer $companyBusinessUnitStoreTransfer): void
+    {
+        $this->getFactory()
+            ->createCompanyBusinessUnitStoreWriter()
+            ->deleteCompanyBusinessUnitStore($companyBusinessUnitStoreTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer|null
+     */
+    public function getCompanyBusinessUnitStoreAddressById(CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer): ?CompanyBusinessUnitStoreAddressTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitStoreAddressReader()
+            ->findCompanyBusinessUnitStoreAddressById($companyBusinessUnitStoreAddressTransfer->getIdCompanyBusinessUnitStoreAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
+     */
+    public function saveCompanyBusinessUnitStoreAddress(CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer): CompanyBusinessUnitStoreAddressTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitStoreAddressWriter()
+            ->saveCompanyBusinessUnitStoreAddress($companyBusinessUnitStoreAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer
+     *
+     * @return void
+     */
+    public function deleteCompanyBusinessUnitStoreAddress(CompanyBusinessUnitStoreAddressTransfer $companyBusinessUnitStoreAddressTransfer): void
+    {
+        $this->getFactory()
+            ->createCompanyBusinessUnitStoreAddressWriter()
+            ->deleteCompanyBusinessUnitStoreAddress($companyBusinessUnitStoreAddressTransfer);
     }
 }

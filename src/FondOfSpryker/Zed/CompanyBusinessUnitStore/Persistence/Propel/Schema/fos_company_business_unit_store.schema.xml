@@ -3,22 +3,35 @@
 
     <table name="fos_company_business_unit_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_company_business_unit_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_company_business_unit_store_address" type="INTEGER" required="false" default="NULL"/>
+        <column name="fk_company_business_unit" type="INTEGER" required="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
 
-        <column name="fk_company_business_unit" type="INTEGER" required="true"/>
-
-        <foreign-key name="fos_company_business_unit_store-fk_company_business_unit" foreignTable="spy_company_business_unit">
-            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        <foreign-key name="fos_company_business_unit_store-address" foreignTable="fos_company_business_unit_store_address" onDelete="SETNULL">
+            <reference foreign="id_company_business_unit_store_address" local="fk_company_business_unit_store_address"/>
         </foreign-key>
 
-        <index name="fos_company_business_unit_store-fk_company_business_unit">
-            <index-column name="fk_company_business_unit"/>
-        </index>
-
-        <unique name="fos_company_business_unit_store-fk_company_business_unit">
-            <unique-column name="fk_company_business_unit"/>
-        </unique>
+        <foreign-key name="fos_company_business_unit_store-business-unit" foreignTable="spy_company_business_unit" onDelete="SETNULL">
+            <reference foreign="id_company_business_unit" local="fk_company_business_unit"/>
+        </foreign-key>
 
         <id-method-parameter value="fos_company_business_unit_store_pk_seq"/>
+    </table>
+
+    <table name="fos_company_business_unit_store_address" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_company_business_unit_store_address" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="google_place_id" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="address1" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="address2" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="address3" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="city" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="zip_code" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="fk_country" type="INTEGER" required="false" default="NULL"/>
+
+        <foreign-key name="fos_company_business_unit_store_address-fk_country" foreignTable="spy_country">
+            <reference local="fk_country" foreign="id_country"/>
+        </foreign-key>
+
+        <id-method-parameter value="fos_company_business_unit_store_address_pk_seq"/>
     </table>
 </database>
